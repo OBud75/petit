@@ -1,0 +1,20 @@
+00000000000011f9 <swap>:
+    11f9:	f3 0f 1e fa          	endbr64 
+    11fd:	55                   	push   %rbp
+    11fe:	48 89 e5             	mov    %rsp,%rbp
+    1201:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
+    1205:	48 89 75 e0          	mov    %rsi,-0x20(%rbp)
+    1209:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    120d:	8b 00                	mov    (%rax),%eax
+    120f:	89 45 fc             	mov    %eax,-0x4(%rbp)
+    1212:	48 8b 45 e0          	mov    -0x20(%rbp),%rax
+    1216:	8b 10                	mov    (%rax),%edx
+    1218:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    121c:	89 10                	mov    %edx,(%rax)
+    121e:	48 8b 45 e0          	mov    -0x20(%rbp),%rax
+    1222:	8b 55 fc             	mov    -0x4(%rbp),%edx
+    1225:	89 10                	mov    %edx,(%rax)
+    1227:	90                   	nop
+    1228:	5d                   	pop    %rbp
+    1229:	c3                   	retq   
+    122a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
