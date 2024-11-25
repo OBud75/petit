@@ -97,7 +97,6 @@ void get_map(Map* map, Player* player){
         printf("Player invalid");
     }
     
-    printf("-------------------------------------\n");
 
     for (size_t y = 0; y < map->height; y++)
     {
@@ -108,7 +107,6 @@ void get_map(Map* map, Player* player){
         }
         printf("\n");
     }
-
     printf("-------------------------------------\n");
 }
 
@@ -116,32 +114,49 @@ struct Player set_player(Map* map){
     return (struct Player){&map->blocks[map->height/2][map->width/2]};
 }
 
+char getDirection() {
+    char c1, c2, c3;
+
+    c1 = getchar(); // Premier caractère
+    if (c1 != '\033') // Pas une séquence d'échappement
+        return c1;
+
+    c2 = getchar(); // Deuxième caractère
+    if (c2 != '[') // Pas une séquence de touche fléchée
+        return c1;
+
+    c3 = getchar(); // Troisième caractère
+    switch (c3) {
+        case 'A': return 't'; // Flèche haut
+        case 'B': return 'b'; // Flèche bas
+        case 'C': return 'r'; // Flèche droite
+        case 'D': return 'l'; // Flèche gauche
+        default: return '\0'; // Séquence inconnue
+    }
+}
+
 void move(Player* player, char direction){
     //direction => 't','r','b','l'
+    Block *newPosition = NULL;
+
     switch (direction)
     {
-    case 't':
-        if(player->position->top) player->position = player->position->top;
-        else printf("Vous ètes au bord de la carte\n");
-        break;
-
-    case 'r':
-        if(player->position->right) player->position = player->position->right;
-        else printf("Vous ètes au bord de la carte\n");
-        break;
-
-    case 'l':
-        if(player->position->left) player->position = player->position->left;
-        else printf("Vous ètes au bord de la carte\n");
-        break;
-
-    case 'b':
-        if(player->position->bot) player->position = player->position->bot;
-        else printf("Vous ètes au bord de la carte\n");
-        break;
-
-    default:
-        printf("Choisissez une direction correcte\n");
-        break;
+        case 't': newPosition = player->position->top; break;
+        case 'r': newPosition = player->position->right; break;
+        case 'l': newPosition = player->position->left; break;
+        case 'b': newPosition = player->position->bot; break;
+        case 'q': printf("Au revoir\n"); return;
+        default:
+            printf("Choisissez une direction correcte (t, r, l ,b)\n");
+            return;
     }
+
+    if (newPosition)
+    {
+        player->position = newPosition;
+        printf("Déplacement effectué\n");
+    }else{
+        printf("Vous êtes au bord de la carte\n");
+    }
+    
 }

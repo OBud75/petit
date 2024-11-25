@@ -1,5 +1,4 @@
 #include "lib-quadrichaine.h"
-#include <time.h>
 
 int main() {
     int height = 5, width = 5;
@@ -22,26 +21,21 @@ int main() {
     }
     
     printf("Joueur créé avec succès.\n");
-
-    // Tableau des choix possibles
-    char choices[] = {'t', 'l', 'b', 'r'};
-    int num_choices = sizeof(choices) / sizeof(choices[0]);
-
-    // Initialisation du générateur de nombres aléatoires
-    srand(time(NULL)); // Utilise l'heure actuelle comme graine pour rendre le tirage aléatoire
+    printf("\n--------------------------------------------------\n");
+    printf("Menu:\nt.Monter\nr.Droite\nb.Descendre\nl.Gauche\nq.Quitter\n");
+    printf("\n--------------------------------------------------\n");
     
-    for (size_t i = 0; i < 10; i++)
+    char input;
+    
+    do
     {
         get_map(&map, &player);
 
+        printf("Utilisez les flèches directionnelles pour déplacer le joueur. Appuyez sur 'q' pour quitter.\n");
+        char input = getDirection();
 
-        // Génération d'un index aléatoire
-        int random_index = rand() % num_choices;
-
-        printf("%c\n", choices[random_index]);
-
-        move(&player, choices[random_index]);
-    }
+        move(&player, input);
+    } while(input != 'q');
     
 
     // Libération de la mémoire
