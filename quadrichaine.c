@@ -21,21 +21,24 @@ int main() {
     }
     
     printf("Joueur créé avec succès.\n");
-    printf("\n--------------------------------------------------\n");
-    printf("Menu:\nt.Monter\nr.Droite\nb.Descendre\nl.Gauche\nq.Quitter\n");
-    printf("\n--------------------------------------------------\n");
     
     char input;
-    
+    setNonCanonicalMode(1);   
     do
     {
+        system("clear");
+
+        printf("\n--------------------------------------------------\n");
+        printf("Menu:\nz-Monter\nd-Droite\ns-Descendre\nq-Gauche\n.-Quitter\n");
+        printf("\n--------------------------------------------------\n");
         get_map(&map, &player);
 
         printf("Utilisez les flèches directionnelles pour déplacer le joueur. Appuyez sur 'q' pour quitter.\n");
-        char input = getDirection();
+        input = getDirection();
 
         move(&player, input);
     } while(input != 'q');
+    setNonCanonicalMode(0);
     
 
     // Libération de la mémoire

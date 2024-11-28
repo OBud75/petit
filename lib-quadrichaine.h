@@ -1,5 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <termios.h>
+
+// Fonction pour configurer le terminal en mode non canonique
+void setNonCanonicalMode(int enable) {
+    static struct termios oldt, newt;
+    if (enable) {
+        // Sauvegarder les paramètres actuels du terminal
+        tcgetattr(STDIN_FILENO, &oldt);
+        newt = oldt;
+
+        // Désactiver le mode canonique et l'écho
+        newt.c_lflag &= ~(ICANON | ECHO);
+        tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+    } else {
+        // Restaurer les paramètres initiaux
+        tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+    }
+}
 
 typedef struct Map {
     int height;
@@ -115,22 +134,25 @@ struct Player set_player(Map* map){
 }
 
 char getDirection() {
-    char c1, c2, c3;
+    char c1;
 
-    c1 = getchar(); // Premier caractère
-    if (c1 != '\033') // Pas une séquence d'échappement
-        return c1;
-
-    c2 = getchar(); // Deuxième caractère
-    if (c2 != '[') // Pas une séquence de touche fléchée
-        return c1;
-
-    c3 = getchar(); // Troisième caractère
-    switch (c3) {
-        case 'A': return 't'; // Flèche haut
-        case 'B': return 'b'; // Flèche bas
-        case 'C': return 'r'; // Flèche droite
-        case 'D': return 'l'; // Flèche gauche
+    c1 = getchar(); // Troisième caractère
+    switch (c1) {
+        case 'z': 
+            return 't';// Flèche haut
+            break; 
+        case 's': 
+            return 'b'; // Flèche bas
+            break; 
+        case 'd': 
+            return 'r'; // Flèche droite
+            break; 
+        case 'q': 
+            return 'l'; // Flèche gauche
+            break; 
+        case '.': 
+            return 'q'; // Flèche gauche
+            break; 
         default: return '\0'; // Séquence inconnue
     }
 }
