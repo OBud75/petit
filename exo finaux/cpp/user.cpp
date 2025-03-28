@@ -45,6 +45,18 @@ User User::get(int id) {
     sqlite3_close(db);
 
     return User(id, pwd);
+    // Il pourrait être interessant de renvoyer un pointeur/référence vers l'user (créé avec new pour allouer de la mémoire sur le tas comme malloc)
+    // Dans les faits on préfère souvent renvoyer une copie comme vous l'avez fait que d'avoir à gérer la libération de la mémoire.
+    // On peut par contre utiliser des smart pointers, ici à piori make_unique<User>(id, pwd)
+    // On peut éventuellement utiliser std::move pour éviter la copie de l'autre côté du return.
+
+    // Une autre solution serait d'utiliser un conteneur de pointeurs uniques d'User
+    // std::vector<std::unique_ptr<User>>
+    // La fonction get pourrait donc checker dans ce conteneur si un des users à l'id et renvoyer cet user,
+    // sinon le créer, l'ajouter au conteneur (qui récupère donc la responsabilité de free la mémoire)
+    // et renvoyer l'instance qu'on vient d'ajouter au conteneur.
+
+    // Ca rejoint les concepts d'object lifetime et d'ownership en rust
 }
 
 int User::login(int id, const std::string& raw_password) const {

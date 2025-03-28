@@ -33,3 +33,9 @@ int main() {
 
     return 0;
 }
+// On évite d'englober tout le code dans 1 seul try/catch
+// Le code qui ne peut pas lever d'exception comme les std::cout n'a rien à y faire
+// En faisant des try/catch très ciblés on arrive mieux à detecter ce qui pose problème
+
+// Pas forcément besoin d'ajouter les commentaires à chaque ligne, cela rajoute de la maintenance
+// si le code change (et on prend le risque qu'il ne soit pas à jour et donc "mente" sur le code)

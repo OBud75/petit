@@ -19,3 +19,6 @@ int main(int argc, char *argv[]) {
     printf("Valeur de a %d\n", a_value);
 
 }
+// On préfère avoir les signatures dans les headers et les implémentations dans les .c
+// Pour des petits programmes comme ici (et d'une manière générale en
+// fonction de l'organisation du projet) c'est discutable tant que c'est logique...

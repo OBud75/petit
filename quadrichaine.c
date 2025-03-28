@@ -34,6 +34,13 @@ int main() {
         get_map(&map, &player);
 
         printf("Utilisez les flèches directionnelles pour déplacer le joueur. Appuyez sur 'q' pour quitter.\n");
+        // C'est un détail mais les flèches ne fonctionnnent pas c'est bien z, d, s, q, .
+        // Aussi le clear fait que les messages ne restent pas à l'écran (je n'ai pas trouvé grand chose d'autre à dire :
+        // ==31849== HEAP SUMMARY:
+        // ==31849==     in use at exit: 0 bytes in 0 blocks
+        // ==31849==   total heap usage: 9 allocs, 9 frees, 3,088 bytes allocated
+        // ==31849== 
+        // ==31849== All heap blocks were freed -- no leaks are possible)
         input = getDirection();
 
         move(&player, input);
