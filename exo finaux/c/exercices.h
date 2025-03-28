@@ -65,6 +65,8 @@ bool is_greater(void *obj1, void *obj2) {
     }
 }
 
+// On peut penser à une fonction de comparaison qui renvoie -1 si obj1 < obj2, 1 si obj1 > obj2 et 0 si égaux
+
 void swap(void *a, void *b, size_t size) {
     void *temp = malloc(size);
     memcpy(temp, a, size);
